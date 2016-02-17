@@ -1,2 +1,60 @@
-# boot-gae-example
-An example GAE app using boot-gae
+= boot-gae-example
+
+An example https://cloud.google.com/appengine/docs/java/[Google App
+Engine] webapp, written in 100% https://clojure.org/[Clojure], built
+with http://boot-clj.com/[Boot].
+
+[NOTE]
+====
+
+Use of App Engine services such as the Datastore is beyond the scope of
+this example.  Its sole purpose is to demonstrate the how easy it is
+to use https://github.com/migae/boot-gae[boot-gae] to get a Clojure
+webapp up and running on GAE with a repl-like development environment.
+
+====
+
+== getting started
+
+This project has not been pushed to clojars, so you'll need to
+fork/clone it.  It uses https://github.com/migae/boot-gae[boot-gae],
+which also has not yet been pushed to clojars, so you'll need to
+fork/clone and install that too.
+
+[source,shell]
+----
+$ git clone https://github.com/migae/boot-gae.git
+$ cd boot-gae
+$ boot pom jar install
+$ cd ..
+$ git clone https://github.com/migae/gae-hello-boot
+$ cd gae-hello-boot
+$ boot gae/install-sdk
+$ boot prep
+$ boot run
+----
+
+To get a repl-like dev environment, open a second terminal and start a
+watcher:
+
+[source,shell]
+----
+$ cd gae-hello-boot
+$ boot watch sift -i "clj$" target -d "build/WEB-INF/classes" -C
+----
+
+If you want live reloading of other resources, like css files, you'll
+need to add another watcher and adjust the -d string of `target`
+accordingly; for example:
+
+[source,shell]
+----
+$ cd gae-hello-boot
+$ boot watch sift -i "css$" target -d "build" -C
+----
+
+If you need to change the configuration, for example to add another
+servlet, you'll have to restart the server.  First run `boot prep` to
+reconfigure the webapp, then run `boot gae/run` again.
+
+See the README for https://github.com/migae/boot-gae for more info.
