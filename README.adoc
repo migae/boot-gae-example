@@ -4,14 +4,17 @@ A simple https://cloud.google.com/appengine/docs/java/[Google App
 Engine] webapp, written in 100% https://clojure.org/[Clojure], built
 with http://boot-clj.com/[Boot].
 
+IMPORTANT: you do not need a GAE account to experiment!  The GAE SDK
+contains everything you need to run webapps on the local devserver;
+you only need a GAE account if you want to deploy to the production
+servers.
+
 [NOTE]
 ====
-
 Use of App Engine services such as the Datastore is beyond the scope of
 this example.  Its sole purpose is to demonstrate the how easy it is
 to use https://github.com/migae/boot-gae[boot-gae] to get a Clojure
 webapp up and running on GAE with a repl-like development environment.
-
 ====
 
 == getting started
