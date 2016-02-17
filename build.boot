@@ -125,8 +125,8 @@
    :filters [{:ns 'migae.reloader   ; REQUIRED
               :name "reloader"      ; REQUIRED
               :display {:name "Clojure reload filter"} ; OPTIONAL
-              :urls [{:url "echo/*"}
-                     {:url "math/*"}]
+              :urls [{:url "/echo/*"}
+                     {:url "/math/*"}]
               :desc {:text "clojure reload filter"}}]
    :security [{:resource {:name "foo" :desc {:text "Foo resource security"}
                           :url "/foo/*"}
