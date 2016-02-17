@@ -34,6 +34,8 @@ $ boot prep
 $ boot run
 ----
 
+WARNING: The GAE java sdk is quite large, so don't be alarmed if `gae/install-sdk` takes a while to run.
+
 To get a repl-like dev environment, open a second terminal and start a
 watcher:
 
