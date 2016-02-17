@@ -34,8 +34,8 @@
 
 (def gae
   ;; web.xml doco: http://docs.oracle.com/cd/E13222_01/wls/docs81/webapp/web_xml.html
-  {;; :build-dir "build/exploded-app"
-   ;; :sdk-root  "~/.gradle/appengine-sdk"
+  {;; :build-dir ; default: "build";  gradle compatibility: "build/exploded-app"
+   ;; :sdk-root ; default: ~/.appengine-sdk; gradle compatibility: "~/.gradle/appengine-sdk"
    :list-tasks true
    ;; :verbose true
    :aot #{'migae.servlets}
@@ -59,16 +59,6 @@
                :ssl true
                :async-session-persistence {:enabled "true" :queue-name "myqueue"}
                :inbound-services [{:service :mail} {:service :warmup}]
-               ;;mime: http://www.opensource.apple.com/source/JBoss/JBoss-739/jakarta-tomcat-LE-jdk14/conf/web.xml
-               :mime-mappings [{:ext "abs" :type "audio/x-mpeg"}
-                               {:ext "gz"  :type "application/x-gzip"}
-                               {:ext "htm" :type "text/html"}
-                               {:ext "html" :type "text/html"}
-                               {:ext "svg" :type "image/svg+xml"}
-                               {:ext "txt" :type "text/plain"}
-                               {:ext "xml" :type "text/xml"}
-                               {:ext "xsl" :type "text/xsl"}
-                               {:ext "zip" :type "application/zip"}]
                :precompilation true
                :scaling {:basic {:max-instances 11 :idle-timeout "10m"
                                  :instance-class "B2"}
@@ -91,6 +81,16 @@
                ;;                                        :value "http://example.org"}}
                ;;                :exclude {:path "bar/**.zip"}}
                }
+   ;;see http://www.opensource.apple.com/source/JBoss/JBoss-739/jakarta-tomcat-LE-jdk14/conf/web.xml
+   :mime-mappings [{:ext "abs" :type "audio/x-mpeg"}
+                   {:ext "gz"  :type "application/x-gzip"}
+                   {:ext "htm" :type "text/html"}
+                   {:ext "html" :type "text/html"}
+                   {:ext "svg" :type "image/svg+xml"}
+                   {:ext "txt" :type "text/plain"}
+                   {:ext "xml" :type "text/xml"}
+                   {:ext "xsl" :type "text/xsl"}
+                   {:ext "zip" :type "application/zip"}]
    :welcome {:file "index.html"}
    :errors [{:code 404 :url "/404.html"}] ;; use :code, or:type, e.g 'java.lang.String
    :servlet-ns 'migae.servlets
@@ -125,7 +125,8 @@
    :filters [{:ns 'migae.reloader   ; REQUIRED
               :name "reloader"      ; REQUIRED
               :display {:name "Clojure reload filter"} ; OPTIONAL
-              :url "/*"            ; REQUIRED
+              :urls [{:url "echo/*"}
+                     {:url "math/*"}]
               :desc {:text "clojure reload filter"}}]
    :security [{:resource {:name "foo" :desc {:text "Foo resource security"}
                           :url "/foo/*"}
@@ -151,19 +152,19 @@
    (builtin/sift :include #{#"jar$"} :move {#"(.*jar$)" "WEB-INF/lib/$1"})
    (builtin/target :dir #{"build"} :no-clean true)))
 
-(deftask dev
-  "run all the boot-gae tasks"
+(deftask prep
+  "run all the boot-gae prep tasks"
   []
-  (comp (gae/assets :type :html)
-        (gae/assets :type :css)
-        (gae/assets :type :js)
-        (gae/assets :type :ico)
+  (comp ;(gae/assets :type :html)
+        ;(gae/assets :type :css)
+        ;(gae/assets :type :js)
+        ;(gae/assets :type :ico)
         (gae/assets :type :clj :odir "WEB-INF/classes")
         (gae/logging)
         (gae/config)
-        (builtin/target :dir #{"build"})
-        (gae/servlets) ;; :namespace 'migae.servlets)  ;; :dir "WEB-INF/classes")
-        (builtin/sift :include #{#"class$"}
+        (builtin/target :dir #{"build"} :no-clean true)
+        (gae/servlets :save true) ;; save transient .clj files
+        (builtin/sift :include #{#"class$"} ;; retain transient clj files
                       :move {#"(.*class$)" "WEB-INF/classes/$1"})
         (builtin/target :dir #{"build"} :no-clean true)
         #_(gae/run)))
