@@ -1,6 +1,6 @@
 = boot-gae-example
 
-An example https://cloud.google.com/appengine/docs/java/[Google App
+A simple https://cloud.google.com/appengine/docs/java/[Google App
 Engine] webapp, written in 100% https://clojure.org/[Clojure], built
 with http://boot-clj.com/[Boot].
 
