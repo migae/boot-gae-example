@@ -17,5 +17,3 @@
   (doseq [ns-sym (modified-namespaces)]
     (require ns-sym :reload))
   (.doFilter chain rqst resp))
-
-(println "ring reloading reloader")

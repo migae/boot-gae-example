@@ -17,7 +17,7 @@
              (-> (rsp/response (str "<p>" (dissoc req :body) "</p>"))
                  (rsp/content-type "text/html"))))
     (GET "/hello/:name" [name]
-         (-> (rsp/response (str "Hold on there, " name))
+         (-> (rsp/response (str "Hello there, " name))
              (rsp/content-type "text/html")))
     (route/not-found "<h1>Echo API not found</h1>")))
 
@@ -26,18 +26,3 @@
         echo-routes)
        (wrap-defaults api-defaults)
        ))
-
-;; or:
-;; (def echo-handler
-;;   (-> (routes
-;;        echo-routes)
-;;       (wrap-defaults api-defaults)
-;;       ))
-;; (ring/defservice echo-handler)
-;; explicit equivalent of defservice:
-;; (defn -service
-;;   [this rqst resp]
-;;     (let [request-map  (ring/build-request-map rqst)
-;;     response-map (echo-handler request-map)]
-;;     (when response-map
-;;     (ring/update-servlet-response resp response-map))))
