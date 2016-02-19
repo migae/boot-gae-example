@@ -38,7 +38,7 @@
    ;; :sdk-root ; default: ~/.appengine-sdk; gradle compatibility: "~/.gradle/appengine-sdk"
    :list-tasks true
    ;; :verbose true
-   :aot #{'migae.servlets}
+   :aot #{'hello.servlets}
    :app-id (clojure.string/replace +project+ #"/" ".")
    :module "foo"
    :version (clojure.string/lower-case (clojure.string/replace +version+ #"\." "-"))
@@ -93,8 +93,8 @@
                    {:ext "zip" :type "application/zip"}]
    :welcome {:file "index.html"}
    :errors [{:code 404 :url "/404.html"}] ;; use :code, or:type, e.g 'java.lang.String
-   :servlet-ns 'migae.servlets
-   :servlets [{:ns 'migae.echo  ;; = servlet-class
+   :servlet-ns 'hello.servlets
+   :servlets [{:ns 'hello.echo  ;; = servlet-class
                ;; :jsp - alternative to :ns, for using java servlet pages
                :name "echo-servlet"
                :display {:name "Awesome Echo Servlet"}
@@ -103,7 +103,7 @@
                :params [{:name "greeting" :val "Hello"}]
                :load-on-startup {:order 3}}
 
-              {:ns 'migae.math      ;; REQUIRED
+              {:ns 'hello.math      ;; REQUIRED
                :name "math-servlet"  ;; REQUIRED
                :url "/math/*"      ;; REQUIRED
                :params [{:name "op" :val "+"}
@@ -122,7 +122,7 @@
                                 {:name "calculateRpcCosts"
                                  :val true}]}
               :servlet {:display {:name "Google Appstats"}}}
-   :filters [{:ns 'migae.reloader   ; REQUIRED
+   :filters [{:ns 'hello.reloader   ; REQUIRED
               :name "reloader"      ; REQUIRED
               :display {:name "Clojure reload filter"} ; OPTIONAL
               :urls [{:url "/echo/*"}

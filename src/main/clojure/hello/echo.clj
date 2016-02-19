@@ -1,4 +1,4 @@
-(ns migae.echo
+(ns hello.echo
   (:require [clojure.math.numeric-tower :as math]
             [compojure.core :refer :all]
             [compojure.route :as route]

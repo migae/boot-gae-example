@@ -1,4 +1,4 @@
-(ns migae.math
+(ns hello.math
   (:require [clojure.math.numeric-tower :as math]
             [compojure.core :refer :all]
             [compojure.route :as route]
