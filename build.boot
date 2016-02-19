@@ -1,4 +1,4 @@
-(def +project+ 'miraj/gae-simple)
+(def +project+ 'migae/gae-hello-boot)
 (def +version+ "0.1.0-SNAPSHOT")
 
 (set-env!
